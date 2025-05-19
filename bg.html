@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sketchy Canvas Backgrounds</title>
+    <style>
+        body {
+            background: #eee;
+            font-family: sans-serif;
+            padding: 40px;
+        }
+
+        .title {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .sketch-canvas {
+            width: 600px;
+            height: 300px;
+            margin: 30px auto;
+            border: 1px solid #ccc;
+            box-shadow: 0 0 10px rgba(0,0,0,0.05);
+            background-color: #fff;
+        }
+
+        /* Variant 1 – Simple Clean Diagonal Lines */
+        .variant-1 {
+            background-image: 
+                repeating-linear-gradient(
+                    135deg,
+                    rgba(0, 0, 0, 0.05) 0px,
+                    rgba(0, 0, 0, 0.05) 1px,
+                    transparent 1px,
+                    transparent 6px
+                );
+        }
+
+        /* Variant 2 – Irregular Layered Diagonals */
+        .variant-2 {
+            background-image: 
+                repeating-linear-gradient(
+                    137deg, 
+                    rgba(0, 0, 0, 0.03) 0px,
+                    rgba(0, 0, 0, 0.03) 1px,
+                    transparent 1px,
+                    transparent 7px
+                ),
+                repeating-linear-gradient(
+                    133deg, 
+                    rgba(0, 0, 0, 0.02) 0px,
+                    rgba(0, 0, 0, 0.02) 0.5px,
+                    transparent 0.5px,
+                    transparent 10px
+                );
+            background-blend-mode: multiply;
+        }
+
+        /* Variant 3 – Fine Pencil Crosshatch */
+        .variant-3 {
+            background-image:
+                repeating-linear-gradient(
+                    135deg,
+                    rgba(0, 0, 0, 0.07) 0px,
+                    rgba(0, 0, 0, 0.07) 0.5px,
+                    transparent 0.5px,
+                    transparent 5px
+                ),
+                repeating-linear-gradient(
+                    45deg,
+                    rgba(0, 0, 0, 0.07) 0px,
+                    rgba(0, 0, 0, 0.07) 0.5px,
+                    transparent 0.5px,
+                    transparent 5px
+                );
+        }
+        /* Variant 4 – Scribbly Noise Texture (enhanced visibility) */
+        .variant-4 {
+            background-image:
+                repeating-linear-gradient(
+                    135deg,
+                    rgba(0, 0, 0, 0.1) 0px,
+                    rgba(0, 0, 0, 0.15) 1px,
+                    transparent 1px,
+                    transparent 3px
+                ),
+                repeating-linear-gradient(
+                    140deg,
+                    rgba(0, 0, 0, 0.1) 0px,
+                    rgba(0, 0, 0, 0.15) 2px,
+                    transparent 2px,
+                    transparent 6px
+                );
+            background-blend-mode: overlay;
+        }
+
+        /* Variant 5 – Subtle Paper Texture Feel (enhanced visibility) */
+        .variant-5 {
+            background-image:
+                repeating-linear-gradient(
+                    135deg,
+                    rgba(0, 0, 0, 0.1) 0px,
+                    rgba(0, 0, 0, 0.15) 1px,
+                    transparent 1px,
+                    transparent 10px
+                ),
+                repeating-linear-gradient(
+                    225deg,
+                    rgba(0, 0, 0, 0.1) 0px,
+                    rgba(0, 0, 0, 0.15) 1px,
+                    transparent 1px,
+                    transparent 12px
+                );
+            background-blend-mode: soft-light;
+        }
+
+        .label {
+            text-align: center;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1 class="title">Sketchy Canvas Background Variants</h1>
+
+    <div class="sketch-canvas variant-1"></div>
+    <div class="label">Variant 1 – Clean Diagonal Lines</div>
+
+    <div class="sketch-canvas variant-2"></div>
+    <div class="label">Variant 2 – Irregular Raw Lines</div>
+
+    <div class="sketch-canvas variant-3"></div>
+    <div class="label">Variant 3 – Pencil Crosshatch</div>
+
+    <div class="sketch-canvas variant-4"></div>
+    <div class="label">Variant 4 – Scribbly Noise</div>
+
+    <div class="sketch-canvas variant-5"></div>
+    <div class="label">Variant 5 – Subtle Paper Feel</div>
+
+</body>
+</html>
