@@ -1,0 +1,1219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mindful UI Kit - Animated Professional Edition</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+    <!-- Google Fonts - Poppins -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            /* Core Palette - Modern & Professional */
+            --primary-color: #6A7BFF; /* A calm, modern blue */
+            --secondary-color: #40D0D0; /* A complementary teal/mint */
+            --accent-color: #FF9A8B; /* A warm, inviting accent */
+            --light-bg: #F8F9FA;
+            --dark-text: #343A40;
+            --medium-text: #6C757D;
+            --light-text: #ABB5BE;
+            --white-color: #FFFFFF;
+            --border-color: #E0E0E0;
+
+            /* Gradients - Subtle & Professional */
+            --primary-gradient: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            --secondary-gradient: linear-gradient(135deg, #E6E9F0 0%, #EEF1F5 100%); /* Soft Grey */
+            --accent-gradient: linear-gradient(135deg, var(--accent-color) 0%, #FFD49C 100%);
+            --hero-gradient: linear-gradient(135deg, #E6E9F0 0%, #d8dce2 50%, #EEF1F5 100%);
+
+
+            /* Typography */
+            --font-family-base: 'Poppins', sans-serif;
+            --font-weight-light: 300;
+            --font-weight-regular: 400;
+            --font-weight-medium: 500;
+            --font-weight-bold: 600;
+            --font-weight-bolder: 700;
+
+            /* Spacing */
+            --space-xs: 0.25rem;
+            --space-sm: 0.5rem;
+            --space-md: 1rem;
+            --space-lg: 1.5rem;
+            --space-xl: 2rem;
+            --space-xxl: 3rem;
+
+            /* Border Radius */
+            --radius-sm: 0.375rem; /* 6px */
+            --radius-md: 0.75rem;  /* 12px */
+            --radius-lg: 1.25rem; /* 20px */
+
+            /* Shadows - Soft & Layered */
+            --shadow-sm: 0 2px 8px rgba(0,0,0,0.06);
+            --shadow-md: 0 5px 15px rgba(0,0,0,0.08);
+            --shadow-lg: 0 10px 25px rgba(0,0,0,0.1);
+
+            /* Transitions & Animations */
+            --transition-base: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            --transition-fast: all 0.2s ease-in-out;
+            --animation-duration: 0.6s;
+        }
+
+        body {
+            font-family: var(--font-family-base);
+            background-color: var(--light-bg);
+            color: var(--dark-text);
+            line-height: 1.7;
+            font-weight: var(--font-weight-regular);
+            overflow-x: hidden; /* Prevent horizontal scroll from animations */
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-weight: var(--font-weight-bold);
+            color: var(--dark-text);
+            margin-bottom: var(--space-md);
+        }
+        h1 { font-size: 2.5rem; }
+        h2 { font-size: 2rem; }
+        h3 { font-size: 1.75rem; }
+
+        a {
+            color: var(--primary-color);
+            text-decoration: none;
+            transition: var(--transition-base);
+        }
+        a:hover {
+            color: var(--secondary-color);
+            text-decoration: none; /* Keep underline for nav links, remove for others */
+        }
+
+        /* --- Animation Keyframes --- */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulseGlow {
+            0%, 100% { box-shadow: 0 0 5px rgba(var(--primary-color_rgb), 0.2), 0 0 10px rgba(var(--primary-color_rgb), 0.1); }
+            50% { box-shadow: 0 0 10px rgba(var(--primary-color_rgb), 0.4), 0 0 20px rgba(var(--primary-color_rgb), 0.2); }
+        }
+
+        @keyframes subtleGradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* --- Scroll Animation Utilities --- */
+        .animate-on-scroll {
+            opacity: 0;
+            transition: opacity var(--animation-duration) ease-out, transform var(--animation-duration) ease-out;
+        }
+        .animate-on-scroll.fade-in-up {
+            transform: translateY(30px);
+        }
+        .animate-on-scroll.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        /* Delay classes for staggered animations */
+        .delay-1 { transition-delay: 0.1s !important; }
+        .delay-2 { transition-delay: 0.2s !important; }
+        .delay-3 { transition-delay: 0.3s !important; }
+        .delay-4 { transition-delay: 0.4s !important; }
+
+
+        /* --- Reusable Utility Classes --- */
+        .gradient-primary-bg { background: var(--primary-gradient); color: var(--white-color); }
+        .gradient-secondary-bg { background: var(--secondary-gradient); }
+        .gradient-accent-bg { background: var(--accent-gradient); color: var(--white-color); }
+        
+        .rounded-sm { border-radius: var(--radius-sm) !important; }
+        .rounded-md { border-radius: var(--radius-md) !important; }
+        .rounded-lg { border-radius: var(--radius-lg) !important; }
+
+        .shadow-sm { box-shadow: var(--shadow-sm) !important; }
+        .shadow-md { box-shadow: var(--shadow-md) !important; }
+        .shadow-lg { box-shadow: var(--shadow-lg) !important; }
+
+        /* --- Navigation --- */
+        .mindful-navbar {
+            background-color: var(--white-color);
+            border-radius: var(--radius-lg);
+            padding: var(--space-md) var(--space-lg);
+            box-shadow: var(--shadow-md);
+            margin: var(--space-md) auto; /* Centered */
+            max-width: 1200px;
+            position: sticky;
+            top: var(--space-md);
+            z-index: 1030;
+            transition: var(--transition-base);
+        }
+        .navbar-brand {
+            font-weight: var(--font-weight-bolder);
+            font-size: 1.5rem;
+            color: var(--primary-color) !important;
+        }
+        .mindful-navbar .nav-link {
+            color: var(--medium-text);
+            font-weight: var(--font-weight-medium);
+            padding: var(--space-sm) var(--space-md);
+            border-radius: var(--radius-sm);
+            transition: var(--transition-fast); /* Faster transition for nav links */
+            position: relative;
+        }
+        .mindful-navbar .nav-link:hover, .mindful-navbar .nav-link.active {
+            color: var(--primary-color);
+            background-color: rgba(var(--primary-color_rgb, 106, 123, 255), 0.1);
+            transform: translateY(-2px);
+        }
+        .mindful-navbar .nav-link::after { /* Underline effect */
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 2px;
+            background-color: var(--primary-color);
+            transition: width 0.3s ease-out;
+        }
+        .mindful-navbar .nav-link:hover::after, .mindful-navbar .nav-link.active::after {
+            width: 60%;
+        }
+
+        .mindful-navbar .form-control-search {
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-color);
+            padding: var(--space-sm) var(--space-md);
+            transition: var(--transition-base);
+            min-width: 200px;
+        }
+        .mindful-navbar .form-control-search:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 0.2rem rgba(var(--primary-color_rgb, 106, 123, 255), 0.25), var(--shadow-sm);
+            transform: scale(1.02);
+        }
+        .mindful-navbar .btn-login {
+            margin-left: var(--space-md);
+        }
+
+        /* --- Hero Section --- */
+        .hero-section {
+            padding: var(--space-xxl) var(--space-lg);
+            background: var(--hero-gradient);
+            background-size: 200% 200%; /* For gradient animation */
+            animation: subtleGradientShift 15s ease infinite;
+            border-radius: var(--radius-lg);
+            text-align: center;
+            margin-bottom: var(--space-xxl);
+            position: relative;
+            overflow: hidden;
+        }
+        .hero-section h1 {
+            font-weight: var(--font-weight-bolder);
+            font-size: 3rem;
+            margin-bottom: var(--space-md);
+        }
+        .hero-section .lead {
+            font-size: 1.25rem;
+            color: var(--medium-text);
+            margin-bottom: var(--space-lg);
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .hero-section .btn-mindful-primary { /* CTA pulse */
+            animation: pulseGlow 2.5s infinite ease-in-out;
+        }
+
+
+        /* --- Buttons --- */
+        .btn-mindful {
+            padding: var(--space-sm) var(--space-lg);
+            font-weight: var(--font-weight-medium);
+            border-radius: var(--radius-md);
+            transition: var(--transition-base);
+            border: none;
+            letter-spacing: 0.5px;
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-sm);
+            box-shadow: var(--shadow-sm);
+        }
+        .btn-mindful:hover {
+            transform: translateY(-3px) scale(1.03);
+            box-shadow: var(--shadow-md);
+        }
+        .btn-mindful:active {
+            transform: translateY(-1px) scale(0.98);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .btn-mindful-primary {
+            background: var(--primary-gradient);
+            color: var(--white-color);
+            background-size: 150% 150%; /* For gradient hover */
+        }
+        .btn-mindful-primary:hover {
+            background-position: right center; /* Change gradient direction */
+            color: var(--white-color);
+        }
+        .btn-mindful-secondary {
+            background-color: var(--white-color);
+            color: var(--primary-color);
+            border: 1px solid var(--primary-color);
+        }
+        .btn-mindful-secondary:hover {
+            background-color: var(--primary-color);
+            color: var(--white-color);
+        }
+        .btn-mindful-accent {
+            background: var(--accent-gradient);
+            color: var(--dark-text);
+            background-size: 150% 150%;
+        }
+        .btn-mindful-accent:hover {
+            background-position: right center;
+            color: var(--dark-text);
+        }
+
+
+        /* --- Profile Card --- */
+        .profile-card {
+            background-color: var(--white-color);
+            border-radius: var(--radius-lg);
+            padding: var(--space-xl) var(--space-lg);
+            text-align: center;
+            box-shadow: var(--shadow-md);
+            position: relative;
+            transition: var(--transition-base);
+        }
+         .profile-card:hover {
+            transform: translateY(-5px) scale(1.01);
+            box-shadow: var(--shadow-lg);
+        }
+        .profile-avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            margin: calc(-60px - var(--space-xl)) auto var(--space-md);
+            border: 5px solid var(--white-color);
+            box-shadow: var(--shadow-sm);
+            object-fit: cover;
+            position: relative;
+            z-index: 2;
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Bouncy effect */
+        }
+        .profile-card:hover .profile-avatar {
+            transform: scale(1.1) rotate(5deg);
+        }
+        .profile-card h3 {
+            margin-bottom: var(--space-xs);
+        }
+        .profile-bio {
+            color: var(--medium-text);
+            font-size: 0.95rem;
+            margin-bottom: var(--space-lg);
+        }
+        .profile-tags .badge {
+            background-color: var(--secondary-color) !important;
+            color: var(--white-color) !important;
+            font-weight: var(--font-weight-medium);
+            padding: var(--space-xs) var(--space-sm);
+            border-radius: var(--radius-sm);
+            transition: var(--transition-fast);
+        }
+        .profile-tags .badge:hover {
+            transform: scale(1.1);
+            background-color: var(--primary-color) !important;
+        }
+
+        /* --- Stats Card --- */
+        .stats-card {
+            background-color: var(--white-color);
+            border-radius: var(--radius-lg);
+            padding: var(--space-lg);
+            text-align: center;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition-base);
+            position: relative;
+            overflow: hidden;
+        }
+        .stats-card::before { /* Shiny hover effect */
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+        .stats-card:hover::before {
+            left: 150%;
+        }
+        .stats-card:hover {
+            transform: translateY(-8px) scale(1.03);
+            box-shadow: var(--shadow-md);
+        }
+        .stats-icon {
+            font-size: 2rem;
+            margin-bottom: var(--space-sm);
+            color: var(--primary-color);
+            transition: var(--transition-fast);
+        }
+        .stats-card:hover .stats-icon {
+            transform: scale(1.2) rotate(-5deg);
+            color: var(--secondary-color);
+        }
+        .stats-number {
+            font-size: 2.25rem;
+            font-weight: var(--font-weight-bolder);
+            color: var(--dark-text);
+            margin-bottom: var(--space-xs);
+        }
+        .stats-label {
+            font-size: 0.9rem;
+            color: var(--medium-text);
+        }
+
+        /* --- Feature Card (Mindful Card) --- */
+        .mindful-card {
+            background-color: var(--white-color);
+            border-radius: var(--radius-lg);
+            padding: var(--space-lg);
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition-base);
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+        .mindful-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: var(--shadow-lg);
+        }
+        .mindful-card-icon {
+            font-size: 2.5rem;
+            color: var(--accent-color);
+            margin-bottom: var(--space-md);
+            text-align: center;
+            transition: var(--transition-fast);
+        }
+        .mindful-card:hover .mindful-card-icon {
+            transform: rotateY(180deg) scale(1.1);
+            color: var(--primary-color);
+        }
+        .mindful-card .card-title {
+            font-weight: var(--font-weight-bold);
+            margin-bottom: var(--space-sm);
+        }
+        .mindful-card .card-text {
+            color: var(--medium-text);
+            font-size: 0.95rem;
+            flex-grow: 1;
+            margin-bottom: var(--space-md);
+        }
+        .mindful-card .card-img-top {
+            border-top-left-radius: var(--radius-lg);
+            border-top-right-radius: var(--radius-lg);
+            margin-bottom: var(--space-md);
+            max-height: 200px;
+            object-fit: cover;
+            transition: transform 0.3s ease-out, filter 0.3s ease-out;
+        }
+        .mindful-card:hover .card-img-top {
+            transform: scale(1.05);
+            filter: brightness(1.1);
+        }
+
+
+        /* --- Timer Section --- */
+        .timer-section {
+            background: var(--primary-gradient);
+            color: var(--white-color);
+            border-radius: var(--radius-lg);
+            padding: var(--space-xl);
+            text-align: center;
+            box-shadow: var(--shadow-md);
+            background-size: 200% 200%;
+            animation: subtleGradientShift 20s ease infinite reverse; /* Different direction/speed */
+        }
+        .timer-section h3 {
+            color: var(--white-color);
+            margin-bottom: var(--space-lg);
+        }
+        .timer-display {
+            font-size: 4rem;
+            font-weight: var(--font-weight-bolder);
+            margin-bottom: var(--space-lg);
+            font-variant-numeric: tabular-nums;
+            transition: transform 0.2s ease; /* For potential JS-driven "tick" */
+        }
+        .timer-section .btn-mindful {
+            background-color: rgba(255,255,255,0.2);
+            color: var(--white-color);
+            border: 1px solid rgba(255,255,255,0.5);
+        }
+        .timer-section .btn-mindful:hover {
+            background-color: rgba(255,255,255,0.35);
+            transform: translateY(-3px) scale(1.05);
+        }
+
+        /* --- Search & Filter --- */
+        .filter-section .form-control, .filter-section .form-select {
+            border-radius: var(--radius-md);
+            padding: var(--space-sm) var(--space-md);
+            border: 1px solid var(--border-color);
+            transition: var(--transition-base);
+        }
+        .filter-section .form-control:focus, .filter-section .form-select:focus {
+             border-color: var(--primary-color);
+             box-shadow: 0 0 0 0.2rem rgba(var(--primary-color_rgb, 106, 123, 255), 0.25);
+             transform: scale(1.01);
+        }
+        .filter-buttons .btn {
+            border-radius: var(--radius-md);
+            background-color: var(--white-color);
+            color: var(--medium-text);
+            border: 1px solid var(--border-color);
+            transition: var(--transition-fast);
+            margin: var(--space-xs);
+            padding: var(--space-sm) var(--space-md);
+        }
+        .filter-buttons .btn:hover, .filter-buttons .btn.active {
+            background-color: var(--primary-color);
+            color: var(--white-color);
+            border-color: var(--primary-color);
+            transform: translateY(-2px) scale(1.02);
+        }
+
+        /* --- Table --- */
+        .mindful-table-wrapper {
+            background-color: var(--white-color);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-md);
+            overflow: hidden;
+        }
+        .mindful-table thead {
+            background: var(--primary-gradient);
+        }
+        .mindful-table thead th {
+            color: var(--white-color);
+            font-weight: var(--font-weight-medium);
+            border-bottom: none;
+            padding: var(--space-md) var(--space-lg);
+        }
+        .mindful-table tbody td {
+            padding: var(--space-md) var(--space-lg);
+            vertical-align: middle;
+            color: var(--medium-text);
+            border-top: 1px solid var(--border-color);
+            transition: background-color 0.2s ease;
+        }
+        .mindful-table tbody tr:first-child td {
+            border-top: none;
+        }
+        .mindful-table tbody tr {
+            transition: transform 0.2s ease-out;
+        }
+        .mindful-table tbody tr:hover {
+            background-color: rgba(var(--primary-color_rgb, 106, 123, 255), 0.07);
+            transform: scale(1.005); /* Slight lift */
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            z-index: 1;
+            position: relative;
+        }
+
+
+        /* --- Progress Bar --- */
+        .progress-mindful {
+            height: 10px;
+            border-radius: var(--radius-sm);
+            background-color: var(--secondary-gradient);
+            overflow: hidden;
+        }
+        .progress-mindful .progress-bar-animated { /* Renamed for JS targeting */
+            background: var(--primary-gradient);
+            border-radius: var(--radius-sm);
+            width: 0; /* Start at 0 for animation */
+            transition: width 1s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        /* --- Pagination --- */
+        .mindful-pagination .page-link {
+            background-color: var(--white-color);
+            border: 1px solid var(--border-color);
+            color: var(--medium-text);
+            border-radius: var(--radius-sm) !important;
+            margin: 0 var(--space-xs);
+            padding: var(--space-sm) var(--space-md);
+            transition: var(--transition-fast);
+        }
+        .mindful-pagination .page-link:hover {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+            color: var(--white-color);
+            transform: translateY(-2px) scale(1.05);
+            z-index: 2;
+            box-shadow: var(--shadow-sm);
+        }
+        .mindful-pagination .page-item.active .page-link {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+            color: var(--white-color);
+            transform: scale(1.1);
+            z-index: 3;
+            box-shadow: var(--shadow-md);
+        }
+        .mindful-pagination .page-item.disabled .page-link {
+            color: var(--light-text);
+            background-color: var(--light-bg);
+            border-color: var(--border-color);
+        }
+
+        /* --- Forms (Contact & General Inputs) --- */
+        .form-control-mindful, .textarea-mindful {
+            padding: var(--space-sm) var(--space-md);
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-color);
+            background-color: var(--white-color);
+            font-size: 1rem;
+            color: var(--dark-text);
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition-base);
+        }
+        .form-control-mindful::placeholder, .textarea-mindful::placeholder {
+            color: var(--light-text);
+        }
+        .form-control-mindful:focus, .textarea-mindful:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 0.2rem rgba(var(--primary-color_rgb, 106, 123, 255), 0.25), var(--shadow-md);
+            transform: scale(1.01);
+        }
+        .textarea-mindful {
+            min-height: 120px;
+        }
+        .form-label {
+            font-weight: var(--font-weight-medium);
+            margin-bottom: var(--space-xs);
+            transition: color 0.2s ease;
+        }
+        .form-control-mindful:focus + .form-label, /* If label is after input */
+        label:has(+ .form-control-mindful:focus) { /* If label is before */
+            color: var(--primary-color);
+        }
+
+
+        /* --- Mobile Navigation --- */
+        .mobile-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: var(--white-color);
+            padding: var(--space-sm) 0;
+            box-shadow: 0 -5px 15px rgba(0,0,0,0.1);
+            z-index: 1020;
+            border-top-left-radius: var(--radius-lg);
+            border-top-right-radius: var(--radius-lg);
+        }
+        .mobile-nav .nav-item {
+            flex-grow: 1;
+            text-align: center;
+        }
+        .mobile-nav .nav-link {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: var(--space-sm) var(--space-xs);
+            color: var(--medium-text);
+            font-size: 0.75rem;
+            transition: color 0.2s ease, transform 0.2s ease;
+        }
+        .mobile-nav .nav-link i {
+            font-size: 1.25rem;
+            margin-bottom: var(--space-xs);
+            transition: transform 0.2s ease;
+        }
+        .mobile-nav .nav-link:hover, .mobile-nav .nav-link.active {
+            color: var(--primary-color);
+            transform: translateY(-2px);
+        }
+        .mobile-nav .nav-link:hover i, .mobile-nav .nav-link.active i {
+            transform: scale(1.1);
+        }
+        .mobile-nav .nav-link:active i {
+            transform: scale(0.9);
+        }
+
+
+        /* --- Footer --- */
+        .site-footer {
+            background-color: var(--dark-text);
+            color: var(--light-text);
+            padding: var(--space-xl) 0 var(--space-xxl) 0;
+            margin-top: var(--space-xxl);
+        }
+        .site-footer h5 {
+            color: var(--white-color);
+            margin-bottom: var(--space-md);
+        }
+        .site-footer a {
+            color: var(--light-text);
+            transition: color 0.2s ease, padding-left 0.2s ease;
+        }
+        .site-footer a:hover {
+            color: var(--primary-color);
+            padding-left: 5px; /* Subtle indent on hover */
+        }
+        .footer-bottom {
+            border-top: 1px solid var(--medium-text);
+            padding-top: var(--space-md);
+            margin-top: var(--space-lg);
+            font-size: 0.9rem;
+        }
+        .site-footer .fab {
+            transition: transform 0.3s ease, color 0.3s ease;
+        }
+        .site-footer .fab:hover {
+            transform: scale(1.3) rotate(10deg);
+            color: var(--primary-color);
+        }
+
+
+        /* Adjustments for RGB in box-shadow and background */
+        :root {
+            --primary-color_rgb: 106, 123, 255; /* For rgba() usage */
+        }
+        
+        /* Utility for section padding */
+        .section-padding {
+            padding-top: var(--space-xxl);
+            padding-bottom: var(--space-xxl);
+        }
+        .section-title {
+            text-align: center;
+            margin-bottom: var(--space-xl);
+            font-weight: var(--font-weight-bolder);
+        }
+
+        /* Reduced motion preferences */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
+            .animate-on-scroll { opacity: 1; transform: none; } /* Make immediately visible */
+            .hero-section, .timer-section { animation: none; }
+            .btn-mindful:hover, .stats-card:hover, .mindful-card:hover, .profile-card:hover /* etc. for all hovers */ {
+                transform: none;
+            }
+            .profile-card:hover .profile-avatar { transform: none; }
+            .stats-card:hover .stats-icon { transform: none; }
+            .mindful-card:hover .mindful-card-icon { transform: none; }
+            .mindful-card:hover .card-img-top { transform: none; filter: none; }
+            .mindful-navbar .nav-link:hover, .mindful-navbar .nav-link.active { transform: none; }
+             .mindful-navbar .nav-link:hover::after, .mindful-navbar .nav-link.active::after { width: 0; }
+
+        }
+
+
+        /* Responsive Adjustments */
+        @media (max-width: 767.98px) {
+            body {
+                padding-bottom: 70px;
+            }
+            .hero-section h1 { font-size: 2.25rem; }
+            .hero-section .lead { font-size: 1.1rem; }
+            .timer-display { font-size: 3rem; }
+            .mindful-navbar {
+                position: static;
+                margin: var(--space-md);
+                border-radius: var(--radius-md);
+            }
+             .mindful-navbar .navbar-collapse {
+                margin-top: var(--space-md);
+             }
+            .mindful-navbar .form-control-search { width: 100%; margin-top: var(--space-sm); }
+            .mindful-navbar .btn-login { width: 100%; margin-top: var(--space-sm); margin-left: 0;}
+            .section-title { font-size: 1.75rem; }
+
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg mindful-navbar">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Mindful.io</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar" aria-controls="mainNavbar" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="mainNavbar">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#">Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#features">Meditations</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#sessions">Sessions</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contact">Community</a>
+                    </li>
+                </ul>
+                <form class="d-flex me-lg-2 mb-2 mb-lg-0" role="search">
+                    <input class="form-control form-control-search" type="search" placeholder="Search content..." aria-label="Search">
+                </form>
+                <button class="btn btn-mindful btn-mindful-primary btn-login">Login</button>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container mt-4">
+
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <h1 class="animate-on-scroll fade-in-up">Find Your Inner Calm</h1>
+            <p class="lead animate-on-scroll fade-in-up delay-1">Discover a library of guided meditations, breathing exercises, and mindfulness tools designed to help you live a more present and peaceful life.</p>
+            <a href="#features" class="btn btn-mindful btn-mindful-primary btn-lg animate-on-scroll fade-in-up delay-2">
+                <i class="fas fa-compass"></i> Explore Now
+            </a>
+        </section>
+
+        <!-- Profile Section -->
+        <section id="profile" class="section-padding">
+            <h2 class="section-title animate-on-scroll fade-in-up">Your Guide</h2>
+            <div class="row justify-content-center">
+                <div class="col-md-8 col-lg-6 animate-on-scroll fade-in-up delay-1">
+                    <div class="profile-card">
+                        <img src="https://via.placeholder.com/120/AED9E0/333333?text=JD" class="profile-avatar" alt="Jane Doe Avatar">
+                        <h3>Jane Doe</h3>
+                        <p class="profile-bio">Certified Mindfulness Coach & Meditation Expert. Passionate about helping you unlock your potential for peace and presence.</p>
+                        <div class="profile-tags d-flex justify-content-center gap-2 mb-4">
+                            <span class="badge">Meditation</span>
+                            <span class="badge">Stress Reduction</span>
+                            <span class="badge">Yoga</span>
+                        </div>
+                        <div class="d-flex justify-content-center gap-3">
+                            <button class="btn-mindful btn-mindful-primary"><i class="fas fa-user-plus"></i> Follow</button>
+                            <button class="btn-mindful btn-mindful-secondary"><i class="fas fa-envelope"></i> Message</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Stats Section -->
+        <section id="stats" class="section-padding">
+            <h2 class="section-title animate-on-scroll fade-in-up">Your Progress</h2>
+            <div class="row g-4">
+                <div class="col-md-6 col-lg-3 animate-on-scroll fade-in-up">
+                    <div class="stats-card">
+                        <div class="stats-icon"><i class="fas fa-brain"></i></div>
+                        <div class="stats-number stats-number-animate">128</div>
+                        <div class="stats-label">Sessions Completed</div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3 animate-on-scroll fade-in-up delay-1">
+                    <div class="stats-card">
+                        <div class="stats-icon"><i class="fas fa-clock"></i></div>
+                        <div class="stats-number stats-number-animate">72h</div>
+                        <div class="stats-label">Total Mindful Minutes</div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3 animate-on-scroll fade-in-up delay-2">
+                    <div class="stats-card">
+                        <div class="stats-icon"><i class="fas fa-fire"></i></div>
+                        <div class="stats-number stats-number-animate">21</div>
+                        <div class="stats-label">Day Streak</div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3 animate-on-scroll fade-in-up delay-3">
+                    <div class="stats-card">
+                        <div class="stats-icon"><i class="fas fa-star"></i></div>
+                        <div class="stats-number stats-number-animate">4.8k</div>
+                        <div class="stats-label">Mindful Points</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Feature Cards Section -->
+        <section id="features" class="section-padding">
+            <h2 class="section-title animate-on-scroll fade-in-up">Explore Our Tools</h2>
+            <div class="row g-4">
+                <div class="col-md-6 col-lg-4 animate-on-scroll fade-in-up">
+                    <div class="mindful-card">
+                         <img src="https://via.placeholder.com/400x200/B9E8B2/333333?text=Meditation" class="card-img-top" alt="Meditation Image">
+                        <div class="card-body p-0 pt-3">
+                            <h5 class="card-title">Guided Meditations</h5>
+                            <p class="card-text">Access a vast library of meditations for stress, sleep, focus, and more. Suitable for all levels.</p>
+                            <button class="btn-mindful btn-mindful-accent mt-auto w-100">
+                                <i class="fas fa-headphones-alt"></i> Listen Now
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4 animate-on-scroll fade-in-up delay-1">
+                    <div class="mindful-card">
+                        <div class="mindful-card-icon"><i class="fas fa-wind"></i></div>
+                        <h5 class="card-title">Breathing Exercises</h5>
+                        <p class="card-text">Learn simple yet powerful breathing techniques to calm your nervous system and enhance clarity.</p>
+                        <button class="btn-mindful btn-mindful-accent mt-auto w-100">
+                            <i class="fas fa-lungs"></i> Practice Now
+                        </button>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4 animate-on-scroll fade-in-up delay-2">
+                    <div class="mindful-card">
+                        <div class="mindful-card-icon"><i class="fas fa-book-open-reader"></i></div>
+                        <h5 class="card-title">Mindful Journaling</h5>
+                        <p class="card-text">Cultivate gratitude and self-reflection with guided journaling prompts and a private space for your thoughts.</p>
+                        <button class="btn-mindful btn-mindful-accent mt-auto w-100">
+                            <i class="fas fa-pencil-alt"></i> Start Writing
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Timer Section -->
+        <section id="timer" class="section-padding animate-on-scroll fade-in-up">
+            <div class="timer-section">
+                <h3>Focus Timer</h3>
+                <div class="timer-display">25:00</div>
+                <div class="d-flex justify-content-center gap-3">
+                    <button class="btn-mindful"><i class="fas fa-play me-1"></i>Start</button>
+                    <button class="btn-mindful"><i class="fas fa-pause me-1"></i>Pause</button>
+                    <button class="btn-mindful"><i class="fas fa-redo me-1"></i>Reset</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Search & Filter Section -->
+        <section id="search-filter" class="section-padding filter-section animate-on-scroll fade-in-up">
+            <h2 class="section-title">Find Your Session</h2>
+            <div class="row g-3 align-items-center mb-4">
+                <div class="col-lg-6">
+                    <input type="search" class="form-control" placeholder="Search by keyword (e.g., 'sleep', 'anxiety')">
+                </div>
+                <div class="col-lg-3">
+                    <select class="form-select">
+                        <option selected>All Categories</option>
+                        <option value="1">Meditation</option>
+                        <option value="2">Breathing</option>
+                        <option value="3">Sleep Stories</option>
+                        <option value="4">Mindful Movement</option>
+                    </select>
+                </div>
+                <div class="col-lg-3">
+                     <select class="form-select">
+                        <option selected>Any Duration</option>
+                        <option value="1">Under 5 min</option>
+                        <option value="2">5-10 min</option>
+                        <option value="3">10-20 min</option>
+                        <option value="4">20+ min</option>
+                    </select>
+                </div>
+            </div>
+            <div class="text-center filter-buttons">
+                <button class="btn active">All</button>
+                <button class="btn">Newest</button>
+                <button class="btn">Popular</button>
+                <button class="btn">For Beginners</button>
+                <button class="btn">Advanced</button>
+            </div>
+        </section>
+
+        <!-- Table Section (Upcoming Sessions / Content Listing) -->
+        <section id="sessions" class="section-padding">
+            <h2 class="section-title animate-on-scroll fade-in-up">Your Activity Log</h2>
+            <div class="mindful-table-wrapper animate-on-scroll fade-in-up delay-1">
+                <table class="table mindful-table mb-0">
+                    <thead>
+                        <tr>
+                            <th>Activity / Session</th>
+                            <th>Type</th>
+                            <th>Duration</th>
+                            <th>Progress / Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Morning Calm Meditation</td>
+                            <td>Meditation</td>
+                            <td>15 min</td>
+                            <td>
+                                <div class="progress progress-mindful" role="progressbar" aria-label="Session progress" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">
+                                    <div class="progress-bar-animated" aria-valuenow="75"></div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Box Breathing Technique</td>
+                            <td>Breathing</td>
+                            <td>5 min</td>
+                            <td>
+                                <span class="badge bg-success-subtle text-success-emphasis rounded-pill">Completed</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Evening Wind-Down Yoga</td>
+                            <td>Movement</td>
+                            <td>20 min</td>
+                             <td>
+                                <div class="progress progress-mindful" role="progressbar" aria-label="Session progress" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100">
+                                    <div class="progress-bar-animated" aria-valuenow="30"></div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>The Enchanted Forest</td>
+                            <td>Sleep Story</td>
+                            <td>30 min</td>
+                             <td>
+                               <span class="badge bg-info-subtle text-info-emphasis rounded-pill">Not Started</span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Pagination -->
+        <nav aria-label="Content navigation" class="d-flex justify-content-center section-padding mindful-pagination animate-on-scroll fade-in-up">
+            <ul class="pagination">
+                <li class="page-item disabled"><a class="page-link" href="#" tabindex="-1" aria-disabled="true"><i class="fas fa-chevron-left"></i></a></li>
+                <li class="page-item"><a class="page-link" href="#">1</a></li>
+                <li class="page-item active" aria-current="page"><a class="page-link" href="#">2</a></li>
+                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                <li class="page-item"><a class="page-link" href="#"><i class="fas fa-ellipsis-h"></i></a></li>
+                <li class="page-item"><a class="page-link" href="#">10</a></li>
+                <li class="page-item"><a class="page-link" href="#"><i class="fas fa-chevron-right"></i></a></li>
+            </ul>
+        </nav>
+
+        <!-- Contact Form -->
+        <section id="contact" class="section-padding">
+            <h2 class="section-title animate-on-scroll fade-in-up">Get In Touch</h2>
+            <div class="row justify-content-center">
+                <div class="col-lg-8 animate-on-scroll fade-in-up delay-1">
+                    <div class="mindful-card p-lg-5">
+                        <form>
+                            <div class="row g-3">
+                                <div class="col-md-6 mb-3">
+                                    <label for="contactName" class="form-label">Your Name</label>
+                                    <input type="text" class="form-control-mindful" id="contactName" placeholder="Enter your name">
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="contactEmail" class="form-label">Email Address</label>
+                                    <input type="email" class="form-control-mindful" id="contactEmail" placeholder="Enter your email">
+                                </div>
+                                <div class="col-12 mb-3">
+                                    <label for="contactSubject" class="form-label">Subject</label>
+                                    <input type="text" class="form-control-mindful" id="contactSubject" placeholder="What can we help you with?">
+                                </div>
+                                <div class="col-12 mb-3">
+                                    <label for="contactMessage" class="form-label">Message</label>
+                                    <textarea class="textarea-mindful" id="contactMessage" rows="5" placeholder="Your message here..."></textarea>
+                                </div>
+                                <div class="col-12 text-center">
+                                    <button type="submit" class="btn-mindful btn-mindful-primary btn-lg">
+                                        <i class="fas fa-paper-plane"></i> Send Message
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Mobile Navigation -->
+    <nav class="mobile-nav d-lg-none">
+        <div class="container-fluid">
+            <ul class="nav">
+                <li class="nav-item">
+                    <a class="nav-link active" href="#" aria-current="page">
+                        <i class="fas fa-home"></i>
+                        <span>Home</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#features">
+                        <i class="fas fa-compass"></i>
+                        <span>Explore</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#timer">
+                        <i class="fas fa-stopwatch-20"></i>
+                        <span>Timer</span>
+                    </a>
+                </li>
+                 <li class="nav-item">
+                    <a class="nav-link" href="#sessions">
+                        <i class="fas fa-list-alt"></i>
+                        <span>Activity</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#profile">
+                        <i class="fas fa-user-circle"></i>
+                        <span>Profile</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 col-md-6 mb-4 mb-lg-0 animate-on-scroll fade-in-up">
+                    <h5>Mindful.io</h5>
+                    <p class="small">Your daily companion for mental well-being and mindfulness. Find peace, one breath at a time.</p>
+                </div>
+                <div class="col-lg-2 col-md-3 col-6 mb-4 mb-lg-0 animate-on-scroll fade-in-up delay-1">
+                    <h5>Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#features">Features</a></li>
+                        <li><a href="#">Pricing</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 col-md-3 col-6 mb-4 mb-lg-0 animate-on-scroll fade-in-up delay-2">
+                    <h5>Resources</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Support Center</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 col-md-12 mb-4 mb-lg-0 animate-on-scroll fade-in-up delay-3">
+                    <h5>Connect With Us</h5>
+                    <div class="d-flex gap-3">
+                        <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f fa-lg"></i></a>
+                        <a href="#" aria-label="Twitter"><i class="fab fa-twitter fa-lg"></i></a>
+                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram fa-lg"></i></a>
+                        <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in fa-lg"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom text-center animate-on-scroll fade-in-up delay-4">
+                © <script>document.write(new Date().getFullYear())</script> Mindful.io. All Rights Reserved.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            // Scroll-triggered animations
+            const animatedElements = document.querySelectorAll('.animate-on-scroll');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        // Optional: Unobserve after animation if you don't want it to replay
+                        // observer.unobserve(entry.target); 
+                    } else {
+                        // Optional: Remove class if you want animation to replay on scroll out and in
+                        // entry.target.classList.remove('visible');
+                    }
+                });
+            }, {
+                threshold: 0.1 // Trigger when 10% of the element is visible
+            });
+            animatedElements.forEach(el => observer.observe(el));
+
+            // Progress bar animation
+            const progressBars = document.querySelectorAll('.progress-bar-animated');
+            const progressObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const progressBar = entry.target;
+                        progressBar.style.width = progressBar.getAttribute('aria-valuenow') + '%';
+                        // Optional: unobserve after animation
+                        // progressObserver.unobserve(progressBar); 
+                    }
+                });
+            }, { threshold: 0.5 }); // Trigger when 50% of progress bar is visible
+            progressBars.forEach(bar => progressObserver.observe(bar));
+
+            // Stats number count-up animation
+            const statsNumbers = document.querySelectorAll('.stats-number-animate');
+            const statsObserver = new IntersectionObserver((entries, observerInstance) => { // Pass observerInstance
+                entries.forEach(entry => {
+                    if (entry.isIntersecting && !entry.target.classList.contains('counted')) {
+                        entry.target.classList.add('counted');
+                        const targetValueText = entry.target.dataset.targetValue || entry.target.textContent;
+                        
+                        const suffixMatch = targetValueText.match(/([kKhH])$/);
+                        const suffix = suffixMatch ? suffixMatch[1] : '';
+                        const numericPart = suffix ? targetValueText.slice(0, -suffix.length) : targetValueText;
+
+                        let targetValue = parseFloat(numericPart.replace(/,/g, ''));
+                        if (suffix.toLowerCase() === 'k') targetValue *= 1000;
+                        // 'h' doesn't need multiplier as it's usually part of the string itself
+
+                        let currentValue = 0;
+                        const duration = 1500; // ms
+                        const stepTime = 16; // roughly 60fps
+                        const steps = duration / stepTime;
+                        const increment = targetValue / steps;
+
+                        function updateCount() {
+                            currentValue += increment;
+                            if (currentValue < targetValue) {
+                                entry.target.textContent = Math.ceil(currentValue).toLocaleString() + (suffix && targetValue >=1000 && suffix.toLowerCase() === 'k' ? '' : suffix) ; // only add suffix if not already implied by k value
+                                requestAnimationFrame(updateCount);
+                            } else {
+                                entry.target.textContent = targetValue.toLocaleString() + (suffix && targetValue >=1000 && suffix.toLowerCase() === 'k' ? '' : suffix);
+                            }
+                        }
+                        entry.target.textContent = '0' + suffix; // Initial display
+                        requestAnimationFrame(updateCount);
+                        // Optional: unobserve after animation
+                        // observerInstance.unobserve(entry.target); 
+                    }
+                });
+            }, { threshold: 0.5 });
+
+            statsNumbers.forEach(numEl => {
+                 // Store original text to extract target value and suffix
+                const originalText = numEl.textContent;
+                numEl.dataset.targetValue = originalText; // Store the original full string for parsing
+                statsObserver.observe(numEl);
+            });
+        });
+    </script>
+</body>
+</html>

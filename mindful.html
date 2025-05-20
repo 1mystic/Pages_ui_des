@@ -1,0 +1,1505 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mindful UI Kit</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css"> <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* Brand Kit & Theme Variables */
+        :root {
+            /* Brand Colors - Pastel Gradients */
+            --primary-gradient: linear-gradient(135deg, #AED9E0 0%, #F8F0DF 100%); /* Soft Blue to Beige */
+            --secondary-gradient: linear-gradient(135deg, #FBC7D4 0%, #FDE2E2 100%); /* Pink to Light Pink */
+            --accent-gradient: linear-gradient(135deg, #B9E8B2 0%, #E6FFD9 100%); /* Light Green to Pale Green */
+            --pastel-yellow: #FFF9C4;
+            --pastel-blue: #E3F2FD;
+            --pastel-pink: #FCE4EC;
+            --pastel-green: #E8F5E9;
+
+            /* Brand Typography */
+            --font-family-base: 'Poppins', sans-serif;
+            --font-size-base: 1rem;
+            --font-weight-light: 300;
+            --font-weight-regular: 400;
+            --font-weight-medium: 500;
+            --font-weight-bold: 600;
+
+            /* Spacing & Layout */
+            --space-sm: 0.5rem;
+            --space-md: 1rem;
+            --space-lg: 1.5rem;
+            --space-xl: 2rem;
+            --border-radius-sm: 0.5rem;
+            --border-radius-md: 1rem;
+            --border-radius-lg: 1.5rem;
+
+            /* Shadows */
+            --box-shadow-light: 0 4px 12px rgba(0,0,0,0.05);
+            --box-shadow-medium: 0 6px 18px rgba(0,0,0,0.1);
+
+            /* Component Specific Variables - can override in component styles if needed */
+            --component-padding-y: var(--space-md);
+            --component-padding-x: var(--space-lg);
+            --component-border-radius: var(--border-radius-md);
+        }
+
+        body {
+            font-family: var(--font-family-base);
+            font-size: var(--font-size-base);
+            font-weight: var(--font-weight-regular);
+            background-color: #f8f9fa; /* Light grey background */
+            color: #333; /* Dark grey text */
+            line-height: 1.6;
+        }
+
+        /* --- Reusable Utility Classes --- */
+        .gradient-primary { background: var(--primary-gradient); }
+        .gradient-secondary { background: var(--secondary-gradient); }
+        .gradient-accent { background: var(--accent-gradient); }
+        .bg-pastel-yellow { background-color: var(--pastel-yellow); }
+        .bg-pastel-blue { background-color: var(--pastel-blue); }
+        .bg-pastel-pink { background-color: var(--pastel-pink); }
+        .bg-pastel-green { background-color: var(--pastel-green); }
+
+        .text-accent { color: var(--accent-color); }
+        .fw-light { font-weight: var(--font-weight-light); }
+        .fw-medium { font-weight: var(--font-weight-medium); }
+        .fw-bold { font-weight: var(--font-weight-bold); }
+
+        .rounded-sm { border-radius: var(--border-radius-sm); }
+        .rounded-md { border-radius: var(--border-radius-md); }
+        .rounded-lg { border-radius: var(--border-radius-lg); }
+
+        .shadow-light { box-shadow: var(--box-shadow-light); }
+        .shadow-medium { box-shadow: var(--box-shadow-medium); }
+
+
+        /* --- General Component Styles (Overriding Bootstrap where needed) --- */
+
+        /* Typography - Headings */
+        h1, h2, h3, h4, h5, h6 {
+            font-weight: var(--font-weight-bold);
+            margin-bottom: var(--space-md);
+        }
+
+        /* Links */
+        a {
+            color: #007bff; /* Bootstrap primary color - can customize */
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+        a:hover {
+            color: #0056b3;
+            text-decoration: underline;
+        }
+
+        /* --- Navigation --- */
+        .mindful-nav {
+            background: #fff; /* Solid white nav background now, more minimal */
+            border-radius: var(--border-radius-lg);
+            padding: var(--component-padding-y) var(--component-padding-x);
+            box-shadow: var(--box-shadow-light);
+        }
+        .navbar-brand {
+            font-weight: var(--font-weight-medium);
+        }
+        .navbar-brand:hover {
+            text-decoration: none; /* Remove underline on hover for brand */
+        }
+        .nav-link { /* Example for nav links if you add them */
+            padding: var(--space-sm) var(--space-md);
+            border-radius: var(--border-radius-sm);
+            transition: background-color 0.2s ease;
+        }
+        .nav-link:hover {
+            background-color: var(--pastel-blue); /* Soft hover effect */
+        }
+
+        /* --- Search Box --- */
+        .search-box {
+            background-color: var(--pastel-blue);
+            border-radius: var(--border-radius-md);
+            padding: var(--space-sm) var(--space-md);
+            border: 1px solid transparent; /* Initially transparent border */
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+            font-size: var(--font-size-base);
+            color: #555; /* Slightly darker text in search box */
+        }
+        .search-box::placeholder {
+            color: #aaa; /* Lighter placeholder text */
+        }
+        .search-box:focus {
+            border-color: #ccc; /* Slightly visible border on focus */
+            outline: none; /* Remove default focus outline */
+            box-shadow: var(--box-shadow-medium);
+        }
+
+
+        /* --- Cards --- */
+        .mindful-card {
+            background: #fff; /* Solid white cards now, for cleaner look, gradients can be used selectively inside */
+            border: none;
+            border-radius: var(--border-radius-lg);
+            padding: var(--component-padding-y) var(--component-padding-x);
+            box-shadow: var(--box-shadow-light);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .mindful-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--box-shadow-medium);
+        }
+        .card-title {
+            font-weight: var(--font-weight-medium);
+            margin-bottom: var(--space-sm);
+        }
+        .card-text {
+            color: #555;
+        }
+        .card-img-top { /* If using images in cards */
+            border-top-left-radius: var(--border-radius-lg);
+            border-top-right-radius: var(--border-radius-lg);
+            margin-bottom: var(--space-md);
+        }
+
+        /* --- Buttons --- */
+        .btn-mindful {
+            background: var(--accent-gradient); /* Accent gradient for buttons */
+            border: none;
+            color: #fff;
+            padding: var(--space-sm) var(--space-lg);
+            border-radius: var(--border-radius-md);
+            box-shadow: var(--box-shadow-light);
+            transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+            font-weight: var(--font-weight-medium);
+        }
+        .btn-mindful:hover {
+            background: linear-gradient(135deg, #99d992 0%, #c7ffb9 100%); /* Slightly lighter green on hover */
+            box-shadow: var(--box-shadow-medium);
+            transform: translateY(-2px);
+        }
+        .btn-mindful:active {
+            background: linear-gradient(135deg, #80b37a 0%, #a3cc99 100%); /* Slightly darker green on active */
+            transform: translateY(0);
+            box-shadow: var(--box-shadow-light); /* Less shadow when pressed */
+        }
+        .btn-mindful:focus {
+            outline: none; /* Remove default focus outline */
+            box-shadow: var(--box-shadow-medium); /* Keep shadow on focus */
+        }
+        .btn-mindful-secondary { /* Example of a secondary button style */
+            background-color: var(--pastel-pink);
+            color: #555;
+            box-shadow: none; /* No shadow for secondary button initially */
+        }
+        .btn-mindful-secondary:hover {
+            background-color: #f7cdd5; /* Slightly darker pink on hover */
+            box-shadow: var(--box-shadow-light); /* Add light shadow on hover */
+            color: #333; /* Darken text slightly on hover */
+        }
+
+        /* --- Profile Card --- */
+        .profile-card {
+            background: var(--secondary-gradient); /* Secondary gradient for profile card */
+            border-radius: var(--border-radius-lg);
+            padding: var(--space-xl);
+            text-align: center;
+            box-shadow: var(--box-shadow-medium);
+        }
+        .profile-avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            margin: -70px auto var(--space-md); /* Adjust margin to position avatar */
+            border: 3px solid #fff;
+            box-shadow: var(--box-shadow-light);
+        }
+        .profile-name {
+            font-weight: var(--font-weight-medium);
+            margin-bottom: var(--space-sm);
+        }
+        .profile-bio {
+            color: #666; /* Lighter color for bio text */
+            margin-bottom: var(--space-lg);
+        }
+
+
+        /* --- Table --- */
+        .mindful-table {
+            background-color: #fff;
+            border-radius: var(--border-radius-lg);
+            overflow: hidden; /* To clip rounded corners */
+            box-shadow: var(--box-shadow-medium);
+        }
+        .mindful-table thead {
+            background: var(--primary-gradient); /* Primary gradient for table header */
+            color: #fff;
+            font-weight: var(--font-weight-medium);
+        }
+        .mindful-table th, .mindful-table td {
+            padding: var(--space-md) var(--space-lg);
+            border-bottom: 1px solid #eee; /* Light grey row separator */
+            text-align: left;
+        }
+        .mindful-table tbody tr:last-child td {
+            border-bottom: none; /* Remove border from last row */
+        }
+
+
+        /* --- Filter Boxes (Example - using dropdowns) --- */
+        .filter-box-group {
+            display: flex;
+            gap: var(--space-md);
+            margin-bottom: var(--space-lg);
+        }
+        .filter-box-select { /* Style for select dropdown */
+            padding: var(--space-sm) var(--space-md);
+            border-radius: var(--border-radius-md);
+            border: 1px solid #ddd;
+            background-color: #fff;
+            appearance: none; /* Remove default dropdown arrow in some browsers */
+            -webkit-appearance: none; /* For Safari */
+            -moz-appearance: none; /* For Firefox */
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23aaa' d='M7 10l5 5 5-5z'/%3E%3C/svg%3E"); /* Custom dropdown arrow */
+            background-repeat: no-repeat;
+            background-position-x: right var(--space-md);
+            background-position-y: center;
+            font-size: var(--font-size-base);
+            color: #555;
+        }
+        .filter-box-select:focus {
+            outline: none;
+            border-color: #ccc;
+            box-shadow: var(--box-shadow-light);
+        }
+
+
+        /* --- Mobile Navigation --- */
+        @media (max-width: 768px) {
+            .mobile-nav {
+                position: fixed;
+                bottom: var(--space-md);
+                left: 0;
+                right: 0;
+                margin-left: auto;
+                margin-right: auto;
+                width: 90%; /* Adjust width for mobile */
+                max-width: 400px; /* Max width for larger mobiles */
+                background-color: #fff;
+                border-radius: var(--border-radius-lg);
+                padding: var(--space-sm); /* Less padding on mobile nav */
+                box-shadow: var(--box-shadow-medium);
+                display: flex; /* Ensure buttons are in a row */
+                justify-content: space-around; /* Space buttons evenly */
+            }
+            .mobile-nav .btn-mindful {
+                padding: var(--space-sm); /* Smaller button padding in mobile nav */
+                border-radius: 50%; /* Circular buttons in mobile nav */
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                width: 3.5rem; /* Fixed width for circular buttons */
+                height: 3.5rem; /* Fixed height for circular buttons */
+            }
+            .mobile-nav .btn-mindful span { /* Hide text in mobile nav buttons, if any */
+                display: none;
+            }
+        }
+
+
+        /* --- Other Components (Example: Pagination, Progress Bar, etc.) --- */
+
+        /* Pagination */
+        .mindful-pagination {
+            display: flex;
+            justify-content: center;
+            margin-top: var(--space-xl);
+        }
+        .page-link-mindful {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            color: #555;
+            padding: var(--space-sm) var(--space-md);
+            border-radius: var(--border-radius-sm);
+            margin: 0 var(--space-sm);
+            text-decoration: none;
+            transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+        }
+        .page-link-mindful:hover, .page-link-mindful.active {
+            background-color: var(--pastel-blue);
+            border-color: var(--pastel-blue);
+            color: #333;
+        }
+        .page-link-mindful.active {
+            font-weight: var(--font-weight-medium);
+        }
+        .page-link-mindful:focus {
+            outline: none;
+            box-shadow: var(--box-shadow-light);
+        }
+
+        /* Progress Bar */
+        .progress-mindful {
+            height: 12px;
+            border-radius: var(--border-radius-md);
+            background-color: var(--pastel-blue);
+            overflow: hidden; /* To clip rounded corners of value */
+        }
+        .progress-mindful::-webkit-progress-value { /* For Chrome, Safari */
+            background: var(--accent-gradient);
+            border-radius: var(--border-radius-md);
+        }
+        .progress-mindful::-moz-progress-value { /* For Firefox */
+            background: var(--accent-gradient);
+            border-radius: var(--border-radius-md);
+        }
+
+        /* Input Fields (Text, Email, etc.) */
+        .form-control-mindful {
+            padding: var(--space-sm) var(--space-md);
+            border-radius: var(--border-radius-md);
+            border: 1px solid #ddd;
+            background-color: #fff;
+            font-size: var(--font-size-base);
+            color: #555;
+            box-shadow: var(--box-shadow-light);
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        .form-control-mindful::placeholder {
+            color: #aaa;
+        }
+        .form-control-mindful:focus {
+            outline: none;
+            border-color: #ccc;
+            box-shadow: var(--box-shadow-medium);
+        }
+
+        /* Text Areas */
+        .textarea-mindful {
+            @extend .form-control-mindful; /* Reuses form-control styles */
+            min-height: 100px;
+        }
+
+        /* Checkboxes and Radio Buttons (Minimal Style - Custom if needed for more playfulness) */
+        /* Bootstrap default styles can be used for minimal checkboxes/radios, or further custom styling can be added */
+
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <nav class="navbar navbar-expand-lg mindful-nav mb-4">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Mindful</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Meditations</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Blog</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">About</a>
+                    </li>
+                </ul>
+                <input type="search" class="search-box ms-lg-3" placeholder="Search...">
+            </div>
+        </div>
+    </nav>
+
+    <div class="profile-card mb-5">
+        <img src="avatar.jpg" class="profile-avatar" alt="Avatar">
+        <h3 class="profile-name">John Doe</h3>
+        <p class="profile-bio">Mindfulness Coach & Writer. Sharing practices for a calmer life.</p>
+        <div class="d-flex justify-content-center gap-3">
+            <button class="btn-mindful">Follow</button>
+            <button class="btn-mindful btn-mindful-secondary">Message</button>
+        </div>
+    </div>
+
+    <div class="row g-4 mb-5">
+        <div class="col-md-4">
+            <div class="mindful-card">
+                <img src="card-image-1.jpg" class="card-img-top" alt="Meditation Image" style="max-height: 200px; object-fit: cover;">
+                <div class="card-body">
+                    <h5 class="card-title">Morning Calm Meditation</h5>
+                    <p class="card-text">Start your day with peace. A guided 10-minute meditation session.</p>
+                    <button class="btn-mindful mt-3">Begin Session</button>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="mindful-card">
+                <div class="card-body">
+                    <h5 class="card-title">Breathing Exercises</h5>
+                    <p class="card-text">Quick and effective breathing techniques to reduce stress and anxiety.</p>
+                    <button class="btn-mindful mt-3">Explore</button>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="mindful-card">
+                <div class="card-body">
+                    <h5 class="card-title">Gratitude Journal</h5>
+                    <p class="card-text">Cultivate positivity by noting down things you are grateful for each day.</p>
+                    <button class="btn-mindful mt-3">Start Journaling</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="filter-box-group mb-4">
+        <select class="filter-box-select">
+            <option value="">Category</option>
+            <option value="meditation">Meditation</option>
+            <option value="breathing">Breathing Exercises</option>
+            <option value="journaling">Journaling</option>
+        </select>
+        <select class="filter-box-select">
+            <option value="">Duration</option>
+            <option value="5-min">Under 5 minutes</option>
+            <option value="5-15-min">5-15 minutes</option>
+            <option value="15-min-plus">15+ minutes</option>
+        </select>
+    </div>
+
+
+    <div class="mb-5">
+        <table class="table mindful-table">
+            <thead>
+            <tr>
+                <th>Activity</th>
+                <th>Duration</th>
+                <th>Progress</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>Morning Meditation</td>
+                <td>15 min</td>
+                <td>
+                    <div class="progress progress-mindful">
+                        <div class="progress-bar" style="width: 75%"></div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>Evening Reflection</td>
+                <td>10 min</td>
+                <td>
+                    <div class="progress progress-mindful">
+                        <div class="progress-bar" style="width: 50%"></div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>Mindful Walk</td>
+                <td>30 min</td>
+                <td>
+                    <div class="progress progress-mindful">
+                        <div class="progress-bar" style="width: 90%"></div>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <nav class="mindful-pagination mb-5">
+        <a href="#" class="page-link-mindful">&laquo;</a>
+        <a href="#" class="page-link-mindful">1</a>
+        <a href="#" class="page-link-mindful active">2</a>
+        <a href="#" class="page-link-mindful">3</a>
+        <a href="#" class="page-link-mindful">4</a>
+        <a href="#" class="page-link-mindful">5</a>
+        <a href="#" class="page-link-mindful">&raquo;</a>
+    </nav>
+
+    <div class="mb-5">
+        <h2>Contact Us</h2>
+        <form>
+            <div class="mb-3">
+                <label for="nameInput" class="form-label">Your Name</label>
+                <input type="text" class="form-control-mindful" id="nameInput" placeholder="Enter your name">
+            </div>
+            <div class="mb-3">
+                <label for="emailInput" class="form-label">Email Address</label>
+                <input type="email" class="form-control-mindful" id="emailInput" placeholder="Enter your email">
+            </div>
+            <div class="mb-3">
+                <label for="messageTextarea" class="form-label">Message</label>
+                <textarea class="textarea-mindful" id="messageTextarea" rows="3" placeholder="Your message here"></textarea>
+            </div>
+            <button type="submit" class="btn-mindful">Send Message</button>
+        </form>
+    </div>
+
+    <nav class="mobile-nav d-lg-none">
+        <button class="btn-mindful"><i class="bi bi-house-fill"></i> <span>Home</span></button>
+        <button class="btn-mindful"><i class="bi bi-compass-fill"></i> <span>Explore</span></button>
+        <button class="btn-mindful"><i class="bi bi-bookmark-heart-fill"></i> <span>Favorites</span></button>
+        <button class="btn-mindful"><i class="bi bi-person-circle"></i> <span>Profile</span></button>
+    </nav>
+
+</div> <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+
+
+
+
+###########  Chatgpt
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mindful UI Kit</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css" />
+  <style>
+    :root {
+      --gradient1: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
+      --gradient2: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+      --gradient3: linear-gradient(135deg, #d4fc79 0%, #96e6a1 100%);
+      --accent: #7c8c9c;
+      --shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+      --card-border-radius: 1.5rem;
+      --font-family: 'Helvetica Neue', sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: var(--font-family);
+      background: #f8f9fa;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* Navigation */
+    .mindful-nav {
+      background: var(--gradient2);
+      border-radius: 2rem;
+      padding: 1rem 2rem;
+      box-shadow: var(--shadow);
+    }
+    .mindful-nav .navbar-brand {
+      font-weight: bold;
+      font-size: 1.5rem;
+      color: var(--accent);
+    }
+    .mindful-nav .search-box {
+      background: rgba(255, 255, 255, 0.9);
+      border-radius: var(--card-border-radius);
+      padding: 0.5rem 1.5rem;
+      border: 2px solid #f0f0f0;
+    }
+    .mindful-nav .search-box:focus {
+      border-color: var(--accent);
+      box-shadow: none;
+    }
+
+    /* Hero Section */
+    .hero {
+      background: var(--gradient1);
+      padding: 4rem 1rem;
+      text-align: center;
+      color: #fff;
+    }
+    .hero h1 {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+    }
+    .hero p {
+      font-size: 1.25rem;
+      margin-bottom: 2rem;
+    }
+
+    /* Sections */
+    .section {
+      padding: 3rem 0;
+    }
+
+    /* Cards */
+    .mindful-card {
+      background: var(--gradient1);
+      border: none;
+      border-radius: var(--card-border-radius);
+      transition: transform 0.3s ease;
+      padding: 1.5rem;
+      color: #333;
+      box-shadow: var(--shadow);
+    }
+    .mindful-card:hover {
+      transform: translateY(-5px);
+    }
+    .mindful-card h4 {
+      margin-bottom: 0.5rem;
+    }
+
+    /* Buttons */
+    .btn-mindful {
+      background: var(--gradient3);
+      border: none;
+      color: #fff;
+      padding: 0.8rem 2rem;
+      border-radius: 1rem;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.3s ease;
+    }
+    .btn-mindful:hover {
+      box-shadow: 0 5px 15px rgba(146, 204, 191, 0.4);
+      transform: translateY(-2px);
+    }
+
+    /* Profile Card */
+    .profile-card {
+      background: var(--gradient2);
+      border-radius: 2rem;
+      padding: 2rem;
+      text-align: center;
+      box-shadow: var(--shadow);
+      position: relative;
+      margin-top: 4rem;
+    }
+    .profile-card .profile-avatar {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      border: 4px solid white;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      position: absolute;
+      top: -60px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #fff;
+    }
+    .profile-card h3 {
+      margin-top: 70px;
+      margin-bottom: 0.5rem;
+    }
+    .profile-card p {
+      margin-bottom: 1.5rem;
+    }
+
+    /* Table */
+    .mindful-table {
+      background: white;
+      border-radius: 1rem;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+    .mindful-table thead {
+      background: var(--gradient1);
+      color: white;
+    }
+    .mindful-table th,
+    .mindful-table td {
+      padding: 1rem;
+      vertical-align: middle;
+    }
+
+    /* Progress Bar */
+    .progress-mindful {
+      height: 12px;
+      border-radius: 1rem;
+      background: rgba(0, 0, 0, 0.05);
+    }
+    .progress-mindful .progress-bar {
+      background: var(--gradient1);
+      border-radius: 1rem;
+    }
+
+    /* Search & Filter Section */
+    .filter-box {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-top: 1rem;
+    }
+    .filter-box .btn {
+      border-radius: var(--card-border-radius);
+      background: var(--gradient2);
+      border: none;
+      color: var(--accent);
+      padding: 0.5rem 1rem;
+      transition: filter 0.3s;
+    }
+    .filter-box .btn:hover,
+    .filter-box .btn.active {
+      filter: brightness(95%);
+      background: var(--gradient3);
+      color: #fff;
+    }
+
+    /* Mobile Navigation */
+    @media (max-width: 768px) {
+      .mobile-nav {
+        position: fixed;
+        bottom: 1rem;
+        left: 50%;
+        transform: translateX(-50%);
+        background: white;
+        border-radius: 2rem;
+        padding: 1rem;
+        box-shadow: 0 5px 25px rgba(0, 0, 0, 0.1);
+        z-index: 1050;
+      }
+    }
+
+    /* Footer */
+    footer {
+      background: #fff;
+      padding: 1rem 0;
+      box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar mindful-nav">
+    <div class="container d-flex justify-content-between align-items-center">
+      <a class="navbar-brand" href="#">Mindful</a>
+      <input type="search" class="search-box" placeholder="Search..." />
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="container">
+      <h1>Embrace Mindfulness</h1>
+      <p>A modern, minimal, and playful design to guide your mindful journey.</p>
+      <a href="#profile" class="btn btn-mindful">Get Started</a>
+    </div>
+  </section>
+
+  <!-- Profile Card -->
+  <section class="section" id="profile">
+    <div class="container">
+      <div class="profile-card">
+        <img src="https://via.placeholder.com/120" alt="Avatar" class="profile-avatar" />
+        <h3>John Doe</h3>
+        <p>Mindfulness Coach</p>
+        <div class="d-flex justify-content-center gap-2">
+          <button class="btn-mindful">Follow</button>
+          <button class="btn-mindful">Message</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Cards Section -->
+  <section class="section" id="features">
+    <div class="container">
+      <h2 class="text-center mb-5">Our Features</h2>
+      <div class="row g-4">
+        <div class="col-md-4">
+          <div class="mindful-card">
+            <h4>Daily Meditation</h4>
+            <p>Start your 10-minute session and find your calm.</p>
+            <button class="btn-mindful mt-3">Begin</button>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="mindful-card">
+            <h4>Guided Sessions</h4>
+            <p>Join our guided sessions to enhance your practice.</p>
+            <button class="btn-mindful mt-3">Join Now</button>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="mindful-card">
+            <h4>Community Forums</h4>
+            <p>Connect with others and share your journey.</p>
+            <button class="btn-mindful mt-3">Explore</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Search & Filter Section -->
+  <section class="section" id="search-filter">
+    <div class="container">
+      <h2 class="text-center mb-5">Search &amp; Filter Sessions</h2>
+      <div class="row justify-content-center">
+        <div class="col-md-6">
+          <div class="input-group mb-3">
+            <input type="text" class="form-control" placeholder="Search mindfulness topics..." aria-label="Search" />
+            <span class="input-group-text"><i class="bi bi-search"></i></span>
+          </div>
+          <div class="filter-box">
+            <button class="btn active">All</button>
+            <button class="btn">Meditation</button>
+            <button class="btn">Yoga</button>
+            <button class="btn">Relaxation</button>
+            <button class="btn">Nutrition</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Table Section -->
+  <section class="section" id="sessions">
+    <div class="container">
+      <h2 class="text-center mb-5">Upcoming Sessions</h2>
+      <div class="table-responsive">
+        <table class="table mindful-table">
+          <thead>
+            <tr>
+              <th>Activity</th>
+              <th>Duration</th>
+              <th>Progress</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Morning Meditation</td>
+              <td>15 min</td>
+              <td>
+                <div class="progress progress-mindful">
+                  <div class="progress-bar" role="progressbar" style="width: 75%;" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>Yoga for Beginners</td>
+              <td>30 min</td>
+              <td>
+                <div class="progress progress-mindful">
+                  <div class="progress-bar" role="progressbar" style="width: 50%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>Deep Relaxation</td>
+              <td>20 min</td>
+              <td>
+                <div class="progress progress-mindful">
+                  <div class="progress-bar" role="progressbar" style="width: 85%;" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section class="section" id="contact">
+    <div class="container">
+      <h2 class="text-center mb-5">Get in Touch</h2>
+      <div class="row justify-content-center">
+        <div class="col-md-8">
+          <form>
+            <div class="mb-3">
+              <input type="text" class="form-control" placeholder="Your Name" />
+            </div>
+            <div class="mb-3">
+              <input type="email" class="form-control" placeholder="Your Email" />
+            </div>
+            <div class="mb-3">
+              <textarea class="form-control" rows="4" placeholder="Your Message"></textarea>
+            </div>
+            <div class="text-center">
+              <button type="submit" class="btn btn-mindful">Send Message</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Mobile Navigation -->
+  <div class="mobile-nav d-lg-none">
+    <div class="d-flex gap-3">
+      <button class="btn-mindful"><i class="bi bi-house"></i></button>
+      <button class="btn-mindful"><i class="bi bi-heart"></i></button>
+      <button class="btn-mindful"><i class="bi bi-person"></i></button>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="text-center">
+    <div class="container">
+      <p>&copy; 2025 Mindful. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- Bootstrap JS Bundle -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+
+
+
+####### claude + chatgpt - see claude is better on claude
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mindful UI Kit</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Font Awesome Icons -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <style>
+    :root {
+      /* Enhanced Color Palette */
+      --primary-gradient: linear-gradient(135deg, #E6E9F0 0%, #EEF1F5 100%);
+      --accent-gradient: linear-gradient(135deg, #C9D6FF 0%, #E2E2E2 100%);
+      --success-gradient: linear-gradient(135deg, #84fab0 0%, #8fd3f4 100%);
+      --warning-gradient: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+      
+      /* Typography */
+      --heading-font: 'Helvetica Neue', sans-serif;
+      --body-font: 'Arial', sans-serif;
+      
+      /* Spacing */
+      --spacing-xs: 0.25rem;
+      --spacing-sm: 0.5rem;
+      --spacing-md: 1rem;
+      --spacing-lg: 2rem;
+      --spacing-xl: 4rem;
+      
+      /* Border Radius */
+      --radius-sm: 0.5rem;
+      --radius-md: 1rem;
+      --radius-lg: 2rem;
+      
+      /* Shadows */
+      --shadow-sm: 0 2px 8px rgba(0,0,0,0.05);
+      --shadow-md: 0 4px 16px rgba(0,0,0,0.1);
+      --shadow-lg: 0 8px 24px rgba(0,0,0,0.15);
+    }
+
+    body {
+      font-family: var(--body-font);
+      background: #f8f9fa;
+      color: #2c3e50;
+      line-height: 1.6;
+      margin: 0;
+      padding: 0;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+      font-family: var(--heading-font);
+      font-weight: 600;
+    }
+
+    /* Navigation */
+    .mindful-nav {
+      background: white;
+      border-radius: var(--radius-lg);
+      padding: var(--spacing-md) var(--spacing-lg);
+      box-shadow: var(--shadow-sm);
+      margin: var(--spacing-md);
+    }
+
+    .mindful-nav .navbar-brand h4 {
+      margin: 0;
+      color: #2c3e50;
+    }
+
+    .nav-link {
+      color: #2c3e50;
+      padding: var(--spacing-sm) var(--spacing-md);
+      border-radius: var(--radius-md);
+      transition: all 0.3s ease;
+      text-decoration: none;
+    }
+
+    .nav-link:hover {
+      background: var(--primary-gradient);
+    }
+
+    .search-box {
+      background: white;
+      border-radius: var(--radius-lg);
+      padding: var(--spacing-md) var(--spacing-lg);
+      border: 2px solid #eef2f7;
+      transition: all 0.3s ease;
+      width: 100%;
+    }
+
+    .search-box:focus {
+      outline: none;
+      border-color: #8fd3f4;
+      box-shadow: var(--shadow-sm);
+    }
+
+    /* Hero Section */
+    .hero {
+      background: var(--warning-gradient);
+      color: #2c3e50;
+      padding: var(--spacing-xl) var(--spacing-lg);
+      text-align: center;
+    }
+
+    .hero h1 {
+      font-size: 3rem;
+      margin-bottom: var(--spacing-md);
+    }
+
+    .hero p {
+      font-size: 1.25rem;
+      margin-bottom: var(--spacing-lg);
+    }
+
+    /* Enhanced Cards */
+    .mindful-card {
+      background: white;
+      border: none;
+      border-radius: var(--radius-lg);
+      padding: var(--spacing-lg);
+      transition: all 0.3s ease;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .mindful-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .feature-card {
+      background: var(--primary-gradient);
+      padding: var(--spacing-lg);
+      border-radius: var(--radius-lg);
+      text-align: center;
+    }
+
+    /* Buttons */
+    .btn-mindful {
+      padding: var(--spacing-sm) var(--spacing-lg);
+      border-radius: var(--radius-md);
+      border: none;
+      transition: all 0.3s ease;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      cursor: pointer;
+    }
+
+    .btn-mindful-primary {
+      background: var(--primary-gradient);
+      color: #2c3e50;
+    }
+
+    .btn-mindful-accent {
+      background: var(--accent-gradient);
+      color: #2c3e50;
+    }
+
+    .btn-mindful-success {
+      background: var(--success-gradient);
+      color: white;
+    }
+
+    /* Profile Card */
+    .profile-card {
+      background: white;
+      border-radius: var(--radius-lg);
+      padding: var(--spacing-xl);
+      text-align: center;
+      box-shadow: var(--shadow-md);
+      position: relative;
+      margin-bottom: var(--spacing-xl);
+    }
+
+    .profile-avatar {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      margin: -80px auto var(--spacing-md);
+      border: 4px solid white;
+      box-shadow: var(--shadow-sm);
+      object-fit: cover;
+    }
+
+    .mindful-tag {
+      display: inline-block;
+      padding: var(--spacing-xs) var(--spacing-md);
+      border-radius: var(--radius-sm);
+      background: var(--primary-gradient);
+      margin: var(--spacing-xs);
+      font-size: 0.9rem;
+    }
+
+    /* Stats Card */
+    .stats-card {
+      background: white;
+      border-radius: var(--radius-lg);
+      padding: var(--spacing-lg);
+      box-shadow: var(--shadow-sm);
+      text-align: center;
+    }
+
+    .stats-number {
+      font-size: 2rem;
+      font-weight: 600;
+      margin-bottom: var(--spacing-xs);
+      background: var(--primary-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    /* Timer Card */
+    .timer-card {
+      background: var(--accent-gradient);
+      border-radius: var(--radius-lg);
+      padding: var(--spacing-xl);
+      text-align: center;
+      box-shadow: var(--shadow-md);
+      margin-bottom: var(--spacing-xl);
+    }
+
+    .timer-display {
+      font-size: 3rem;
+      font-weight: 600;
+      margin: var(--spacing-lg) 0;
+    }
+
+    /* Progress Bars */
+    .progress-mindful {
+      height: 12px;
+      border-radius: var(--radius-lg);
+      background: #eef2f7;
+      overflow: hidden;
+    }
+
+    .progress-bar-mindful {
+      background: var(--success-gradient);
+      border-radius: var(--radius-lg);
+      transition: width 0.3s ease;
+    }
+
+    /* Table Section */
+    .mindful-table {
+      background: white;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .mindful-table thead {
+      background: var(--primary-gradient);
+      color: #2c3e50;
+    }
+
+    .mindful-table th, .mindful-table td {
+      padding: var(--spacing-md);
+      vertical-align: middle;
+    }
+
+    /* Contact Form */
+    .contact-form {
+      background: white;
+      border-radius: var(--radius-lg);
+      padding: var(--spacing-lg);
+      box-shadow: var(--shadow-sm);
+    }
+
+    /* Mobile Navigation */
+    .mobile-nav {
+      position: fixed;
+      bottom: var(--spacing-md);
+      left: 50%;
+      transform: translateX(-50%);
+      background: white;
+      border-radius: var(--radius-lg);
+      padding: var(--spacing-md);
+      box-shadow: var(--shadow-lg);
+      z-index: 1000;
+      width: 90%;
+      max-width: 400px;
+    }
+
+    .mobile-nav-item {
+      padding: var(--spacing-sm);
+      border-radius: var(--radius-md);
+      transition: all 0.3s ease;
+      text-align: center;
+      color: #2c3e50;
+    }
+
+    .mobile-nav-item:hover {
+      background: var(--primary-gradient);
+    }
+
+    /* Footer */
+    footer {
+      background: white;
+      padding: var(--spacing-md);
+      text-align: center;
+      box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
+      margin-top: var(--spacing-xl);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar mindful-nav">
+    <div class="container d-flex justify-content-between align-items-center">
+      <a class="navbar-brand" href="#"><h4>Mindful</h4></a>
+      <div class="d-none d-md-flex gap-4">
+        <a href="#" class="nav-link">Dashboard</a>
+        <a href="#" class="nav-link">Meditations</a>
+        <a href="#" class="nav-link">Community</a>
+        <a href="#" class="nav-link">Profile</a>
+      </div>
+      <div class="d-flex align-items-center gap-3">
+        <div class="position-relative" style="width: 200px;">
+          <input type="search" class="search-box" placeholder="Search...">
+        </div>
+        <button class="btn-mindful btn-mindful-accent">Login</button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="container">
+      <h1>Embrace Mindfulness</h1>
+      <p>A modern, minimal, and playful design to guide your mindful journey.</p>
+      <button class="btn-mindful btn-mindful-primary">Get Started</button>
+    </div>
+  </section>
+
+  <div class="container my-5">
+    <!-- Profile Section -->
+    <div class="row mb-5">
+      <div class="col-md-8 mx-auto">
+        <div class="profile-card">
+          <img src="https://via.placeholder.com/120" class="profile-avatar" alt="Avatar">
+          <h3>Sarah Anderson</h3>
+          <p class="text-muted">Mindfulness Guide & Meditation Teacher</p>
+          <div class="d-flex justify-content-center gap-3 mb-4">
+            <span class="mindful-tag">Meditation</span>
+            <span class="mindful-tag">Yoga</span>
+            <span class="mindful-tag">Breathing</span>
+          </div>
+          <div class="d-flex justify-content-center gap-3">
+            <button class="btn-mindful btn-mindful-primary">Follow</button>
+            <button class="btn-mindful btn-mindful-success">Message</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Stats Section -->
+    <div class="row g-4 mb-5">
+      <div class="col-md-3">
+        <div class="stats-card">
+          <div class="stats-number">248</div>
+          <div class="text-muted">Meditation Sessions</div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="stats-card">
+          <div class="stats-number">45h</div>
+          <div class="text-muted">Total Practice</div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="stats-card">
+          <div class="stats-number">89%</div>
+          <div class="text-muted">Consistency</div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="stats-card">
+          <div class="stats-number">12k</div>
+          <div class="text-muted">Community Points</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Feature Cards -->
+    <div class="row g-4 mb-5">
+      <div class="col-md-4">
+        <div class="mindful-card">
+          <i class="fas fa-meditation mb-3" style="font-size: 2rem; color: #8fd3f4;"></i>
+          <h4>Daily Meditation</h4>
+          <p class="text-muted">Begin your journey to mindfulness with guided sessions.</p>
+          <div class="progress progress-mindful mt-3 mb-4">
+            <div class="progress-bar progress-bar-mindful" style="width: 75%;"></div>
+          </div>
+          <button class="btn-mindful btn-mindful-primary w-100">Start Session</button>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="mindful-card">
+          <i class="fas fa-book-reader mb-3" style="font-size: 2rem; color: #84fab0;"></i>
+          <h4>Mindful Reading</h4>
+          <p class="text-muted">Explore curated content to deepen your practice.</p>
+          <div class="progress progress-mindful mt-3 mb-4">
+            <div class="progress-bar progress-bar-mindful" style="width: 45%;"></div>
+          </div>
+          <button class="btn-mindful btn-mindful-primary w-100">Browse Library</button>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="mindful-card">
+          <i class="fas fa-users mb-3" style="font-size: 2rem; color: #fcb69f;"></i>
+          <h4>Community</h4>
+          <p class="text-muted">Connect with fellow practitioners and share experiences.</p>
+          <div class="progress progress-mindful mt-3 mb-4">
+            <div class="progress-bar progress-bar-mindful" style="width: 60%;"></div>
+          </div>
+          <button class="btn-mindful btn-mindful-primary w-100">Join Discussion</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Timer Section -->
+    <div class="row mb-5">
+      <div class="col-md-8 mx-auto">
+        <div class="timer-card">
+          <h3>Meditation Timer</h3>
+          <div class="timer-display">20:00</div>
+          <div class="d-flex justify-content-center gap-3">
+            <button class="btn-mindful btn-mindful-success">
+              <i class="fas fa-play me-2"></i>Start
+            </button>
+            <button class="btn-mindful btn-mindful-primary">
+              <i class="fas fa-pause me-2"></i>Pause
+            </button>
+            <button class="btn-mindful btn-mindful-accent">
+              <i class="fas fa-redo me-2"></i>Reset
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Upcoming Sessions Table -->
+    <div class="row mb-5">
+      <div class="col-md-10 mx-auto">
+        <h2 class="mb-4 text-center">Upcoming Sessions</h2>
+        <div class="table-responsive">
+          <table class="table mindful-table">
+            <thead>
+              <tr>
+                <th>Activity</th>
+                <th>Duration</th>
+                <th>Progress</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Morning Meditation</td>
+                <td>15 min</td>
+                <td>
+                  <div class="progress progress-mindful">
+                    <div class="progress-bar progress-bar-mindful" style="width: 75%;"></div>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>Yoga for Beginners</td>
+                <td>30 min</td>
+                <td>
+                  <div class="progress progress-mindful">
+                    <div class="progress-bar progress-bar-mindful" style="width: 50%;"></div>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>Deep Relaxation</td>
+                <td>20 min</td>
+                <td>
+                  <div class="progress progress-mindful">
+                    <div class="progress-bar progress-bar-mindful" style="width: 85%;"></div>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Contact Section -->
+    <div class="row mb-5">
+      <div class="col-md-8 mx-auto">
+        <h2 class="mb-4 text-center">Get in Touch</h2>
+        <div class="contact-form">
+          <form>
+            <div class="mb-3">
+              <input type="text" class="form-control" placeholder="Your Name">
+            </div>
+            <div class="mb-3">
+              <input type="email" class="form-control" placeholder="Your Email">
+            </div>
+            <div class="mb-3">
+              <textarea class="form-control" rows="4" placeholder="Your Message"></textarea>
+            </div>
+            <div class="text-center">
+              <button type="submit" class="btn-mindful btn-mindful-primary">Send Message</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile Navigation -->
+  <div class="mobile-nav d-md-none">
+    <div class="d-flex justify-content-between">
+      <div class="mobile-nav-item">
+        <i class="fas fa-home"></i>
+        <div class="small">Home</div>
+      </div>
+      <div class="mobile-nav-item">
+        <i class="fas fa-meditation"></i>
+        <div class="small">Meditate</div>
+      </div>
+      <div class="mobile-nav-item">
+        <i class="fas fa-book"></i>
+        <div class="small">Learn</div>
+      </div>
+      <div class="mobile-nav-item">
+        <i class="fas fa-user"></i>
+        <div class="small">Profile</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <p>&copy; 2025 Mindful. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- Bootstrap JS Bundle -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
